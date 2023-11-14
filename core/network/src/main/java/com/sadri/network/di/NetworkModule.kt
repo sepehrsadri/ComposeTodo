@@ -1,4 +1,4 @@
-package com.sadri.network
+package com.sadri.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sadri.network.Constants.API_BASE_URL
