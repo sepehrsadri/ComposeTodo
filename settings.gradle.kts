@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ComposeMockTodo"
 include(":app")
- 
+include(":core:network")
