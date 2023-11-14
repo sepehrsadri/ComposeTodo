@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface NetworkService {
   @GET(value = "users")
   suspend fun getUsers(
-    @Query("username") userName: String
+    @Query("username") username: String
   ): List<UserResponse>
 
   @GET(value = "todos")

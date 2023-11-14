@@ -14,7 +14,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ComposeMockTodo"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
-
 include(":core:network")
 include(":core:model")
+include(":core:data")
