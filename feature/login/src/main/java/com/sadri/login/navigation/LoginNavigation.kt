@@ -7,11 +7,13 @@ import com.sadri.login.LoginRoute
 const val loginRoute = "login"
 
 fun NavGraphBuilder.loginScreen(
-  onSubmitSuccessfully: () -> Unit,
+  onSubmitSuccessfully: (String) -> Unit,
+  onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
   composable(loginRoute) {
     LoginRoute(
-      onSubmitSuccessfully = onSubmitSuccessfully
+      onSubmitSuccessfully = onSubmitSuccessfully,
+      onShowSnackbar = onShowSnackbar
     )
   }
 }
