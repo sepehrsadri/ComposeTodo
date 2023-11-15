@@ -25,8 +25,26 @@ android {
 
   buildTypes {
     release {
+      isShrinkResources = false
       isMinifyEnabled = false
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+      isCrunchPngs = false
+      isDebuggable = true
+      enableUnitTestCoverage = true
+      applicationIdSuffix = ".dev"
+      versionNameSuffix = "-dev"
+      signingConfig = signingConfigs.getByName("debug")
+      addManifestPlaceholders(mapOf("metrixDisabled" to true))
+    }
+    debug {
+      isShrinkResources = true
+      isMinifyEnabled = true
+      isCrunchPngs = true
+      isDebuggable = false
+      enableUnitTestCoverage = false
+      addManifestPlaceholders(mapOf("metrixDisabled" to false))
+      proguardFiles(
+        "proguard-rules.pro", getDefaultProguardFile("proguard-android.txt")
+      )
     }
   }
   compileOptions {
@@ -38,6 +56,7 @@ android {
   }
   buildFeatures {
     compose = true
+    buildConfig = true
   }
   composeOptions {
     kotlinCompilerExtensionVersion = "1.5.3"
@@ -53,6 +72,7 @@ dependencies {
   implementation(projects.feature.login)
   implementation(projects.core.designsystem)
   implementation(projects.core.data)
+  implementation(projects.core.logger)
 
   implementation(libs.androidx.compose.material3.windowSizeClass)
   implementation(libs.androidx.window.manager)
