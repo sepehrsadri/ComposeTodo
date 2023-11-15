@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.material3.*
 import com.sadri.composemocktodo.ui.App
 import com.sadri.data.util.NetworkMonitor
 import com.sadri.designsystem.theme.ComposeMockTodoTheme
