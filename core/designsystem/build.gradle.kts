@@ -15,6 +15,12 @@ android {
     consumerProguardFiles("consumer-rules.pro")
   }
 
+  buildFeatures {
+    compose = true
+  }
+  composeOptions {
+    kotlinCompilerExtensionVersion = "1.5.3"
+  }
   buildTypes {
     release {
       isMinifyEnabled = false
