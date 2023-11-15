@@ -74,6 +74,7 @@ dependencies {
   implementation(projects.core.data)
   implementation(projects.core.logger)
 
+  implementation(libs.material3)
   implementation(libs.androidx.compose.material3.windowSizeClass)
   implementation(libs.androidx.window.manager)
   implementation(libs.androidx.lifecycle.runtimeCompose)
@@ -85,7 +86,6 @@ dependencies {
   implementation(libs.ui)
   implementation(libs.ui.graphics)
   implementation(libs.ui.tooling.preview)
-  implementation(libs.material3)
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.ext.junit)
   androidTestImplementation(libs.espresso.core)
