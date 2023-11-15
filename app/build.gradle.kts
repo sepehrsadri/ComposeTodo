@@ -3,6 +3,7 @@ plugins {
   alias(libs.plugins.com.android.application)
   alias(libs.plugins.org.jetbrains.kotlin.android)
   alias(libs.plugins.ksp)
+  alias(libs.plugins.hilt)
 }
 
 android {
@@ -49,7 +50,17 @@ android {
 }
 
 dependencies {
+  implementation(projects.feature.login)
+  implementation(projects.core.designsystem)
+  implementation(projects.core.data)
 
+  implementation(libs.androidx.compose.material3.windowSizeClass)
+  implementation(libs.androidx.window.manager)
+  implementation(libs.activity.compose)
+  implementation(libs.androidx.lifecycle.runtimeCompose)
+  implementation(libs.androidx.lifecycle.viewModelCompose)
+  implementation(libs.androidx.navigation.compose)
+  implementation(libs.lifecycle.runtime.ktx)
   implementation(libs.core.ktx)
   implementation(libs.lifecycle.runtime.ktx)
   implementation(libs.activity.compose)
@@ -65,4 +76,8 @@ dependencies {
   androidTestImplementation(libs.ui.test.junit4)
   debugImplementation(libs.ui.tooling)
   debugImplementation(libs.ui.test.manifest)
+
+  implementation(libs.androidx.hilt.navigation.compose)
+  implementation(libs.hilt.android)
+  ksp(libs.hilt.compiler)
 }

@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.TextRange
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sadri.designsystem.component.SimpleTextField
 import com.sadri.designsystem.theme.space
@@ -33,7 +31,8 @@ import com.sadri.designsystem.theme.space
 internal fun LoginRoute(
   viewModel: LoginViewModel = hiltViewModel(),
   modifier: Modifier = Modifier,
-  onSubmitSuccessfully: () -> Unit,
+  onSubmitSuccessfully: (String) -> Unit,
+  onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
   val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -41,7 +40,8 @@ internal fun LoginRoute(
     uiState = uiState.value,
     login = viewModel::login,
     modifier = modifier,
-    onSubmitSuccessfully = onSubmitSuccessfully
+    onSubmitSuccessfully = onSubmitSuccessfully,
+    onShowSnackbar = onShowSnackbar
   )
 }
 
@@ -50,8 +50,9 @@ internal fun LoginScreen(
   username: String = "",
   uiState: LoginUiState,
   login: (String) -> Unit,
-  onSubmitSuccessfully: () -> Unit,
-  modifier: Modifier = Modifier
+  onSubmitSuccessfully: (String) -> Unit,
+  modifier: Modifier = Modifier,
+  onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
   val onSubmit by rememberUpdatedState(onSubmitSuccessfully)
   val focusRequester = remember { FocusRequester() }
@@ -63,7 +64,6 @@ internal fun LoginScreen(
       )
     )
   }
-  val snackbarHostState = remember { SnackbarHostState() }
 
   Column(
     modifier.fillMaxSize(),
@@ -89,8 +89,8 @@ internal fun LoginScreen(
 
     when (uiState) {
       LoginUiState.Error -> {
-        LaunchedEffect(uiState){
-          snackbarHostState.showSnackbar("Something went wrong!")
+        LaunchedEffect(uiState) {
+          onShowSnackbar("Something went wrong!", "")
         }
       }
       LoginUiState.Loading -> {
@@ -101,13 +101,11 @@ internal fun LoginScreen(
       }
       is LoginUiState.Success -> {
         LaunchedEffect(Unit) {
-          onSubmit()
+          onSubmit(uiState.userEntity.id.toString())
         }
       }
     }
-
   }
-
 }
 
 @Composable
