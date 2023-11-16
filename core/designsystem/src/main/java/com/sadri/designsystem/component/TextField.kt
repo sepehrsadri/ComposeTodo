@@ -9,7 +9,9 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -19,7 +21,7 @@ fun SimpleTextField(
   onValueChange: (TextFieldValue) -> Unit,
   label: @Composable (() -> Unit)? = null,
   singleLine: Boolean = true,
-  keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+  keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
   keyboardActions: KeyboardActions = KeyboardActions(),
   colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors()
 ) {
@@ -32,7 +34,7 @@ fun SimpleTextField(
       keyboardActions = keyboardActions,
       singleLine = singleLine,
       colors = colors,
-      modifier = modifier
+      modifier = modifier,
     )
   }
 }
