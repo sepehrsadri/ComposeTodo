@@ -26,7 +26,7 @@ class LoginViewModel @Inject constructor(
             _uiState.value = LoginUiState.Success(it)
           }
           .onFailure {
-            _uiState.value = LoginUiState.Error
+            _uiState.value = LoginUiState.Error(it)
           }
       }
     }
@@ -37,7 +37,7 @@ class LoginViewModel @Inject constructor(
 sealed interface LoginUiState {
   data class Success(val userEntity: UserEntity) : LoginUiState
 
-  data object Error : LoginUiState
+  data class Error(val error: Throwable) : LoginUiState
 
   data object Loading : LoginUiState
 

@@ -19,7 +19,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -62,8 +61,11 @@ internal fun TodoScreen(
       .padding(MaterialTheme.space.medium)
   ) {
     when (uiState) {
-      TodoUiState.Error -> {
-        Error(retry)
+      is TodoUiState.Error -> {
+        Error(
+          message = requireNotNull(uiState.error.message),
+          retry = retry
+        )
       }
       TodoUiState.Loading -> {
         Loading()
@@ -129,16 +131,19 @@ private fun TodoItem(
 
 @Composable
 private fun BoxScope.Error(
+  message: String,
   retry: () -> Unit
 ) {
   Column(
     modifier = Modifier.align(Alignment.Center),
-    verticalArrangement = Arrangement.spacedBy(MaterialTheme.space.sMedium)
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Text(
-      text = "Something went wrong!",
+      text = message,
       color = MaterialTheme.colorScheme.outline
     )
+    Spacer(modifier = Modifier.height(MaterialTheme.space.sMedium))
     OutlinedButton(
       onClick = { retry.invoke() }
     ) {

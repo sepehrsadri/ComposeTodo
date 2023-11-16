@@ -43,6 +43,7 @@ dependencies {
   implementation(projects.core.designsystem)
   implementation(projects.core.domain)
   implementation(projects.core.model)
+  implementation(projects.core.common)
 
   implementation(libs.androidx.lifecycle.runtimeCompose)
   implementation(libs.androidx.lifecycle.viewModelCompose)

@@ -118,9 +118,9 @@ internal fun LoginScreen(
       Spacer(modifier = Modifier.height(MaterialTheme.space.xLarge))
     }
     when (uiState) {
-      LoginUiState.Error -> {
+      is LoginUiState.Error -> {
         LaunchedEffect(uiState) {
-          onShowSnackbar("Something went wrong!", "")
+          onShowSnackbar(requireNotNull(uiState.error.message), "")
         }
       }
       LoginUiState.Loading -> {
