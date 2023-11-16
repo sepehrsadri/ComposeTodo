@@ -44,6 +44,7 @@ dependencies {
   implementation(projects.core.domain)
   implementation(projects.core.model)
   implementation(projects.core.common)
+  implementation(projects.core.data)
 
   implementation(libs.androidx.lifecycle.runtimeCompose)
   implementation(libs.androidx.lifecycle.viewModelCompose)
@@ -61,6 +62,8 @@ dependencies {
   androidTestImplementation(libs.ui.test.junit4)
   debugImplementation(libs.ui.tooling)
   debugImplementation(libs.ui.test.manifest)
+  testImplementation(projects.core.testing)
+
 
   implementation(libs.androidx.hilt.navigation.compose)
   implementation(libs.hilt.android)
