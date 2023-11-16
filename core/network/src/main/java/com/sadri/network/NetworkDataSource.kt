@@ -9,9 +9,9 @@ import javax.inject.Inject
 class NetworkDataSource @Inject constructor(
   private val networkService: NetworkService
 ) {
-  suspend fun getUser(username: String): Result<UserResponse> =
+  suspend fun getUser(username: String): Result<UserResponse?> =
     safeApiCall {
-      networkService.getUsers(username).first()
+      networkService.getUsers(username).firstOrNull()
     }
 
   suspend fun getTodosList(userId: String): Result<List<TodoItemResponse>> =

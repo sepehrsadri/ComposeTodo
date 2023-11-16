@@ -40,7 +40,7 @@ class TodoViewModel @Inject constructor(
                 _uiState.value = TodoUiState.Success(it)
               }
               .onFailure {
-                _uiState.value = TodoUiState.Error
+                _uiState.value = TodoUiState.Error(it)
               }
           }
         }
@@ -54,7 +54,7 @@ class TodoViewModel @Inject constructor(
 sealed interface TodoUiState {
   data class Success(val todoList: List<TodoItemEntity>) : TodoUiState
 
-  data object Error : TodoUiState
+  data class Error(val error: Throwable) : TodoUiState
 
   data object Loading : TodoUiState
 }
