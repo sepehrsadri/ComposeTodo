@@ -54,67 +54,55 @@ fun App(
     windowSizeClass = windowSizeClass
   ),
 ) {
-  // can get it as a config from server
-  val shouldShowGradientBackground = true
-  Background {
-    GradientBackground(
-      gradientColors = if (shouldShowGradientBackground) {
-        LocalGradientColors.current
-      } else {
-        GradientColors()
-      },
-    ) {
-      val snackbarHostState = remember { SnackbarHostState() }
+  val snackbarHostState = remember { SnackbarHostState() }
 
-      val isOffline by appState.isOffline.collectAsStateWithLifecycle()
+  val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
-      // If user is not connected to the internet show a snack bar to inform them.
-      LaunchedEffect(isOffline) {
-        if (isOffline) {
-          snackbarHostState.showSnackbar(
-            message = "No connection to network",
-            duration = SnackbarDuration.Indefinite,
-          )
-        }
-      }
-
-      Scaffold(
-        modifier = Modifier.semantics {
-          testTagsAsResourceId = true
-        },
-        containerColor = Color.Transparent,
-        contentColor = MaterialTheme.colorScheme.onBackground,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-      ) { padding ->
-        Row(
-          Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .consumeWindowInsets(padding)
-            .windowInsetsPadding(
-              WindowInsets.safeDrawing.only(
-                WindowInsetsSides.Horizontal,
-              ),
-            ),
-        ) {
-
-          Column(Modifier.fillMaxSize()) {
-            NavHost(appState = appState, onShowSnackbar = { message, action ->
-              snackbarHostState.showSnackbar(
-                message = message,
-                actionLabel = action,
-                duration = SnackbarDuration.Short,
-              ) == SnackbarResult.ActionPerformed
-            })
-          }
-
-          // TODO: We may want to add padding or spacer when the snackbar is shown so that
-          //  content doesn't display behind it.
-        }
-      }
+  // If user is not connected to the internet show a snack bar to inform them.
+  LaunchedEffect(isOffline) {
+    if (isOffline) {
+      snackbarHostState.showSnackbar(
+        message = "No connection to network",
+        duration = SnackbarDuration.Indefinite,
+      )
     }
   }
+
+  Scaffold(
+    modifier = Modifier.semantics {
+      testTagsAsResourceId = true
+    },
+    containerColor = Color.Transparent,
+    contentWindowInsets = WindowInsets(0, 0, 0, 0),
+    snackbarHost = { SnackbarHost(snackbarHostState) },
+  ) { padding ->
+    Row(
+      Modifier
+        .fillMaxSize()
+        .padding(padding)
+        .consumeWindowInsets(padding)
+        .windowInsetsPadding(
+          WindowInsets.safeDrawing.only(
+            WindowInsetsSides.Horizontal,
+          ),
+        ),
+    ) {
+
+      Column(Modifier.fillMaxSize()) {
+        NavHost(appState = appState, onShowSnackbar = { message, action ->
+          snackbarHostState.showSnackbar(
+            message = message,
+            actionLabel = action,
+            duration = SnackbarDuration.Short,
+          ) == SnackbarResult.ActionPerformed
+        })
+      }
+
+      // TODO: We may want to add padding or spacer when the snackbar is shown so that
+      //  content doesn't display behind it.
+    }
+  }
+
 }
 
 private fun Modifier.notificationDot(): Modifier =

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
@@ -23,7 +24,11 @@ fun SimpleTextField(
   singleLine: Boolean = true,
   keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
   keyboardActions: KeyboardActions = KeyboardActions(),
-  colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors()
+  colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
+    focusedTextColor = MaterialTheme.colorScheme.outline,
+    disabledTextColor = MaterialTheme.colorScheme.outline,
+    unfocusedTextColor = MaterialTheme.colorScheme.outline
+  )
 ) {
   Column {
     OutlinedTextField(
