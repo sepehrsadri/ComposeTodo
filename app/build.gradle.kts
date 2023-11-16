@@ -70,6 +70,7 @@ android {
 
 dependencies {
   implementation(projects.feature.login)
+  implementation(projects.feature.todo)
   implementation(projects.core.designsystem)
   implementation(projects.core.data)
   implementation(projects.core.logger)

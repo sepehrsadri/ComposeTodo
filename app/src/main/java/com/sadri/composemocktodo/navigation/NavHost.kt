@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import com.sadri.composemocktodo.ui.AppState
 import com.sadri.login.navigation.loginRoute
 import com.sadri.login.navigation.loginScreen
+import com.sadri.todo.navigation.navigateToTodoScreen
+import com.sadri.todo.navigation.todoScreen
 
 @Composable
 fun NavHost(
@@ -21,8 +23,9 @@ fun NavHost(
     modifier = modifier,
   ) {
     loginScreen(
-      onSubmitSuccessfully = {},
+      onSubmitSuccessfully = { navController.navigateToTodoScreen(it) },
       onShowSnackbar = onShowSnackbar
     )
+    todoScreen()
   }
 }
