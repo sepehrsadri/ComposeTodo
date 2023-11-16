@@ -24,7 +24,7 @@ android {
   }
 
   buildTypes {
-    release {
+    debug {
       isShrinkResources = false
       isMinifyEnabled = false
       isCrunchPngs = false
@@ -35,7 +35,7 @@ android {
       signingConfig = signingConfigs.getByName("debug")
       addManifestPlaceholders(mapOf("metrixDisabled" to true))
     }
-    debug {
+    release {
       isShrinkResources = true
       isMinifyEnabled = true
       isCrunchPngs = true

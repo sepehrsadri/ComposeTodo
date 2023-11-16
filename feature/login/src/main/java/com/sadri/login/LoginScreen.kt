@@ -1,10 +1,16 @@
 package com.sadri.login
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -13,13 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,6 +51,7 @@ internal fun LoginRoute(
   )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun LoginScreen(
   username: String = "",
@@ -55,7 +62,7 @@ internal fun LoginScreen(
   onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
   val onSubmit by rememberUpdatedState(onSubmitSuccessfully)
-  val focusRequester = remember { FocusRequester() }
+  val keyboardController = LocalSoftwareKeyboardController.current
   val textFieldValue = rememberSaveable(username, stateSaver = TextFieldValue.Saver) {
     mutableStateOf(
       TextFieldValue(
@@ -65,28 +72,46 @@ internal fun LoginScreen(
     )
   }
 
-  Column(
-    modifier.fillMaxSize(),
-    horizontalAlignment = Alignment.CenterHorizontally
+  Box(
+    modifier = modifier
+      .fillMaxSize()
+      .padding(MaterialTheme.space.medium)
   ) {
-    SimpleTextField(
-      value = textFieldValue.value,
-      onValueChange = { textFieldValue.value = it },
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = MaterialTheme.space.large)
-        .focusRequester(focusRequester),
+    Image(
+      painter = painterResource(id = R.drawable.ic_login),
+      contentDescription = "Login icon",
+      modifier = Modifier.align(Alignment.Center)
     )
-    OutlinedButton(
-      onClick = { login(textFieldValue.value.text) }
+    Column(
+      modifier
+        .align(Alignment.BottomCenter),
+      horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      Text("Submit")
+      SimpleTextField(
+        value = textFieldValue.value,
+        onValueChange = { textFieldValue.value = it },
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = MaterialTheme.space.large),
+        label = { Text(text = "Username") },
+        keyboardActions = KeyboardActions(
+          onDone = {
+            keyboardController?.hide()
+            login(textFieldValue.value.text)
+          })
+      )
+      Spacer(modifier = Modifier.height(MaterialTheme.space.medium))
+      OutlinedButton(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {
+          keyboardController?.hide()
+          login(textFieldValue.value.text)
+        }
+      ) {
+        Text("Submit")
+      }
+      Spacer(modifier = Modifier.height(MaterialTheme.space.xLarge))
     }
-
-    if (uiState !is LoginUiState.Error) {
-      Loading()
-    }
-
     when (uiState) {
       LoginUiState.Error -> {
         LaunchedEffect(uiState) {
@@ -94,12 +119,13 @@ internal fun LoginScreen(
         }
       }
       LoginUiState.Loading -> {
-        // no-op already handled above
+        Loading()
       }
       LoginUiState.Nothing -> {
         // no-op
       }
       is LoginUiState.Success -> {
+        Loading()
         LaunchedEffect(Unit) {
           onSubmit(uiState.userEntity.id.toString())
         }
@@ -109,9 +135,11 @@ internal fun LoginScreen(
 }
 
 @Composable
-private fun Loading() {
+private fun BoxScope.Loading() {
   CircularProgressIndicator(
-    modifier = Modifier.size(MaterialTheme.space.xLarge),
+    modifier = Modifier
+      .size(MaterialTheme.space.xLarge)
+      .align(Alignment.Center),
     color = MaterialTheme.colorScheme.tertiary
   )
 }
