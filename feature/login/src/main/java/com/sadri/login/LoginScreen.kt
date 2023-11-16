@@ -1,6 +1,7 @@
 package com.sadri.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -75,6 +76,7 @@ internal fun LoginScreen(
   Box(
     modifier = modifier
       .fillMaxSize()
+      .background(color = MaterialTheme.colorScheme.background)
       .padding(MaterialTheme.space.medium)
   ) {
     Image(
@@ -108,7 +110,10 @@ internal fun LoginScreen(
           login(textFieldValue.value.text)
         }
       ) {
-        Text("Submit")
+        Text(
+          "Submit",
+          color = MaterialTheme.colorScheme.outline
+        )
       }
       Spacer(modifier = Modifier.height(MaterialTheme.space.xLarge))
     }
@@ -140,6 +145,6 @@ private fun BoxScope.Loading() {
     modifier = Modifier
       .size(MaterialTheme.space.xLarge)
       .align(Alignment.Center),
-    color = MaterialTheme.colorScheme.tertiary
+    color = MaterialTheme.colorScheme.primary
   )
 }
