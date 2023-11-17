@@ -2,14 +2,18 @@ package com.sadri.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -28,7 +32,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sadri.designsystem.component.Loading
 import com.sadri.designsystem.component.SimpleTextField
 import com.sadri.designsystem.theme.space
 
@@ -71,22 +74,20 @@ internal fun LoginScreen(
     )
   }
 
-  Box(
+  Column(
     modifier = modifier
       .fillMaxSize()
+      .verticalScroll(rememberScrollState())
       .background(color = MaterialTheme.colorScheme.background)
-      .padding(MaterialTheme.space.medium)
+      .padding(MaterialTheme.space.medium),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Image(
       painter = painterResource(id = R.drawable.ic_login),
-      contentDescription = "Login icon",
-      modifier = Modifier.align(Alignment.Center)
+      contentDescription = "Login icon"
     )
-    Column(
-      modifier
-        .align(Alignment.BottomCenter),
-      horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
       SimpleTextField(
         value = textFieldValue.value,
         onValueChange = { textFieldValue.value = it },
@@ -114,25 +115,34 @@ internal fun LoginScreen(
         )
       }
       Spacer(modifier = Modifier.height(MaterialTheme.space.xLarge))
-    }
-    when (uiState) {
-      is LoginUiState.Error -> {
-        LaunchedEffect(uiState) {
-          onShowSnackbar(requireNotNull(uiState.error.message), "")
+      when (uiState) {
+        is LoginUiState.Error -> {
+          LaunchedEffect(uiState) {
+            onShowSnackbar(requireNotNull(uiState.error.message), "")
+          }
         }
-      }
-      LoginUiState.Loading -> {
-        Loading()
-      }
-      LoginUiState.Nothing -> {
-        // no-op
-      }
-      is LoginUiState.Success -> {
-        Loading()
-        LaunchedEffect(Unit) {
-          onSubmit.invoke()
+        LoginUiState.Loading -> {
+          Loading()
+        }
+        LoginUiState.Nothing -> {
+          // no-op
+        }
+        is LoginUiState.Success -> {
+          Loading()
+          LaunchedEffect(Unit) {
+            onSubmit.invoke()
+          }
         }
       }
     }
   }
+}
+
+@Composable
+private fun Loading() {
+  CircularProgressIndicator(
+    modifier = Modifier
+      .size(MaterialTheme.space.xLarge),
+    color = MaterialTheme.colorScheme.primary
+  )
 }
