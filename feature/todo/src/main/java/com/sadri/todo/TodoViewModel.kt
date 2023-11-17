@@ -3,7 +3,7 @@ package com.sadri.todo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sadri.domain.GetTodoListUseCase
-import com.sadri.domain.GetUserIdUseCase
+import com.sadri.domain.GetLocalUserUseCase
 import com.sadri.model.TodoItemEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TodoViewModel @Inject constructor(
   private val todoListUseCase: GetTodoListUseCase,
-  private val getUserIdUseCase: GetUserIdUseCase
+  private val getLocalUserUseCase: GetLocalUserUseCase
 ) : ViewModel() {
   private val _uiState: MutableStateFlow<TodoUiState> = MutableStateFlow(TodoUiState.Loading)
   val uiState: StateFlow<TodoUiState> = _uiState
@@ -28,16 +28,17 @@ class TodoViewModel @Inject constructor(
   private fun fetchTodoList() {
     _uiState.value = TodoUiState.Loading
     viewModelScope.launch {
-      getUserIdUseCase.invoke().collect {
-        val id = requireNotNull(it.getOrNull())
-        todoListUseCase.invoke(userId = id).collect { result ->
-          result
-            .onSuccess {
-              _uiState.value = TodoUiState.Success(it)
-            }
-            .onFailure {
-              _uiState.value = TodoUiState.Error(it)
-            }
+      getLocalUserUseCase.invoke().collect { user ->
+        user.id?.let { id ->
+          todoListUseCase.invoke(userId = id).collect { result ->
+            result
+              .onSuccess {
+                _uiState.value = TodoUiState.Success(it)
+              }
+              .onFailure {
+                _uiState.value = TodoUiState.Error(it)
+              }
+          }
         }
       }
     }

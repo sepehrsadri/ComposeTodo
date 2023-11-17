@@ -3,16 +3,13 @@ package com.sadri.login
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -39,7 +36,7 @@ import com.sadri.designsystem.theme.space
 internal fun LoginRoute(
   viewModel: LoginViewModel = hiltViewModel(),
   modifier: Modifier = Modifier,
-  onSubmitSuccessfully: (String) -> Unit,
+  onSubmitSuccessfully: () -> Unit,
   onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
   val uiState = viewModel.uiState.collectAsStateWithLifecycle()
@@ -59,7 +56,7 @@ internal fun LoginScreen(
   username: String = "",
   uiState: LoginUiState,
   login: (String) -> Unit,
-  onSubmitSuccessfully: (String) -> Unit,
+  onSubmitSuccessfully: () -> Unit,
   modifier: Modifier = Modifier,
   onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
@@ -133,7 +130,7 @@ internal fun LoginScreen(
       is LoginUiState.Success -> {
         Loading()
         LaunchedEffect(Unit) {
-          onSubmit(uiState.userEntity.id.toString())
+          onSubmit.invoke()
         }
       }
     }

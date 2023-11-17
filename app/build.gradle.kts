@@ -72,6 +72,7 @@ dependencies {
   implementation(projects.feature.login)
   implementation(projects.feature.todo)
   implementation(projects.feature.splash)
+  implementation(projects.feature.profile)
   implementation(projects.core.designsystem)
   implementation(projects.core.data)
   implementation(projects.core.logger)

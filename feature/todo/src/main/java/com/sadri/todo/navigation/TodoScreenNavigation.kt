@@ -2,27 +2,21 @@ package com.sadri.todo.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.sadri.todo.TodoScreenRoute
 
 const val USER_ID = "userId"
-const val todoNavigationRoute = "todo_route/{$USER_ID}"
+const val todoNavigationRoute = "todo_route"
 
-fun NavController.navigateToTodoScreen(userId: String) {
-  navigate(createRoute(userId))
+fun NavController.navigateToTodoScreen(navOptions: NavOptions? = null) {
+  navigate(todoNavigationRoute, navOptions)
 }
 
 fun NavGraphBuilder.todoScreen() {
   composable(
     route = todoNavigationRoute,
-    arguments = listOf(
-      navArgument(USER_ID) { type = NavType.StringType }
-    )
   ) {
     TodoScreenRoute()
   }
 }
-
-private fun createRoute(userId: String) = "todo_route/{$userId}"
