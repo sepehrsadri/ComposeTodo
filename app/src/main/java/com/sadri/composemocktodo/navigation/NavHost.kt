@@ -14,7 +14,7 @@ fun NavHost(
   appState: AppState,
   onShowSnackbar: suspend (String, String?) -> Boolean,
   modifier: Modifier = Modifier,
-  startDestination: String = loginRoute,
+  startDestination: String,
 ) {
   val navController = appState.navController
   NavHost(

@@ -35,10 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sadri.composemocktodo.navigation.NavHost
 import com.sadri.data.util.NetworkMonitor
-import com.sadri.designsystem.component.Background
-import com.sadri.designsystem.component.GradientBackground
-import com.sadri.designsystem.theme.GradientColors
-import com.sadri.designsystem.theme.LocalGradientColors
 
 @OptIn(
   ExperimentalMaterial3Api::class,
@@ -49,6 +45,7 @@ import com.sadri.designsystem.theme.LocalGradientColors
 fun App(
   windowSizeClass: WindowSizeClass,
   networkMonitor: NetworkMonitor,
+  startDestination: String,
   appState: AppState = rememberAppState(
     networkMonitor = networkMonitor,
     windowSizeClass = windowSizeClass
@@ -89,13 +86,16 @@ fun App(
     ) {
 
       Column(Modifier.fillMaxSize()) {
-        NavHost(appState = appState, onShowSnackbar = { message, action ->
-          snackbarHostState.showSnackbar(
-            message = message,
-            actionLabel = action,
-            duration = SnackbarDuration.Short,
-          ) == SnackbarResult.ActionPerformed
-        })
+        NavHost(
+          appState = appState,
+          startDestination = startDestination,
+          onShowSnackbar = { message, action ->
+            snackbarHostState.showSnackbar(
+              message = message,
+              actionLabel = action,
+              duration = SnackbarDuration.Short,
+            ) == SnackbarResult.ActionPerformed
+          })
       }
 
       // TODO: We may want to add padding or spacer when the snackbar is shown so that

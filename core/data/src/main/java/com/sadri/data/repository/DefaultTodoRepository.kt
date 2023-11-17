@@ -2,7 +2,7 @@ package com.sadri.data.repository
 
 import com.sadri.common.utils.toNetworkException
 import com.sadri.data.model.asEntity
-import com.sadri.model.NetworkException
+import com.sadri.model.AppException
 import com.sadri.model.TodoItemEntity
 import com.sadri.network.NetworkDataSource
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ class DefaultTodoRepository @Inject constructor(
       dataSource.getTodosList(userId)
         .onSuccess { items ->
           if (items.isEmpty()) {
-            emit(Result.failure(NetworkException.EmptyList))
+            emit(Result.failure(AppException.EmptyList))
           } else {
             emit(Result.success(items.map { it.asEntity() }))
           }
