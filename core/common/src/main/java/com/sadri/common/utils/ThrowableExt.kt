@@ -1,8 +1,7 @@
 package com.sadri.common.utils
 
-import android.content.Context
 import com.sadri.model.LocalException
-import com.sadri.model.NetworkException
+import com.sadri.model.AppException
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
@@ -15,21 +14,21 @@ fun Throwable.toLocalException(): LocalException {
   )
 }
 
-fun Throwable.toNetworkException(): NetworkException {
+fun Throwable.toNetworkException(): AppException {
   return when (this) {
-    is NetworkException -> this
-    is UnknownHostException -> NetworkException.Disconnected(cause = this)
-    is IOException -> NetworkException.IO(cause = this)
+    is AppException -> this
+    is UnknownHostException -> AppException.Disconnected(cause = this)
+    is IOException -> AppException.IO(cause = this)
     is HttpException -> this.toHttpException()
-    else -> NetworkException.Unexpected
+    else -> AppException.Unexpected
   }
 }
 
-private fun Throwable.toHttpException(): NetworkException {
+private fun Throwable.toHttpException(): AppException {
   check(this is HttpException) { "$this is not a HttpException" }
   return when {
-    isInternalError() -> NetworkException.Http(cause = this)
-    else -> NetworkException.Unexpected
+    isInternalError() -> AppException.Http(cause = this)
+    else -> AppException.Unexpected
   }
 }
 

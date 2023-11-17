@@ -1,7 +1,7 @@
 package com.sadri.testing.repository
 
 import com.sadri.data.repository.TodoRepository
-import com.sadri.model.NetworkException
+import com.sadri.model.AppException
 import com.sadri.model.TodoItemEntity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -45,10 +45,10 @@ class TestTodoRepository : TodoRepository {
           emit(Result.success(todoList))
         }
         FAILURE_LIST_EMPTY -> {
-          emit(Result.failure(NetworkException.EmptyList))
+          emit(Result.failure(AppException.EmptyList))
         }
         FAILURE_TODO_UNEXPECTED -> {
-          emit(Result.failure(NetworkException.Unexpected))
+          emit(Result.failure(AppException.Unexpected))
         }
         "10" -> {
           emit(Result.success(todoList))

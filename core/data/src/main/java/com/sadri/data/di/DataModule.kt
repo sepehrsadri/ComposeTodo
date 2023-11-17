@@ -1,5 +1,7 @@
 package com.sadri.data.di
 
+import com.sadri.data.repository.AppConfigRepository
+import com.sadri.data.repository.DefaultAppConfigRepository
 import com.sadri.data.repository.DefaultLoginRepository
 import com.sadri.data.repository.DefaultTodoRepository
 import com.sadri.data.repository.LoginRepository
@@ -24,6 +26,11 @@ interface DataModule {
   fun bindTodoRepository(
     todoRepository: DefaultTodoRepository
   ): TodoRepository
+
+  @Binds
+  fun bindAppConfigRepository(
+    appConfigRepository: DefaultAppConfigRepository
+  ): AppConfigRepository
 
   @Binds
   fun bindsNetworkMonitor(

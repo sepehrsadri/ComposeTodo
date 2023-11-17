@@ -2,7 +2,7 @@ package com.sadri.data.repository
 
 import com.sadri.common.utils.toNetworkException
 import com.sadri.data.model.asEntity
-import com.sadri.model.NetworkException
+import com.sadri.model.AppException
 import com.sadri.model.UserEntity
 import com.sadri.network.NetworkDataSource
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ class DefaultLoginRepository @Inject constructor(
       dataSource.getUser(username)
         .onSuccess { user ->
           if (user == null) {
-            emit(Result.failure(NetworkException.UserNotFound))
+            emit(Result.failure(AppException.UserNotFound))
           } else {
             emit(Result.success(user.asEntity()))
           }

@@ -1,7 +1,7 @@
 package com.sadri.testing.repository
 
 import com.sadri.data.repository.LoginRepository
-import com.sadri.model.NetworkException
+import com.sadri.model.AppException
 import com.sadri.model.UserEntity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -26,10 +26,10 @@ class TestLoginRepository : LoginRepository {
           )
         }
         FAILURE_USER_NOT_FOUND -> {
-          emit(Result.failure(NetworkException.UserNotFound))
+          emit(Result.failure(AppException.UserNotFound))
         }
         FAILURE_USER_UNEXPECTED -> {
-          emit(Result.failure(NetworkException.Unexpected))
+          emit(Result.failure(AppException.Unexpected))
         }
         else -> {
           throw IllegalStateException()

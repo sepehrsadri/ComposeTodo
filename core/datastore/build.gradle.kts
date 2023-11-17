@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-  namespace = "com.sadri.splash"
+  namespace = "com.sadri.datastore"
   compileSdk = 34
 
   defaultConfig {
@@ -15,13 +15,6 @@ android {
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
-  }
-
-  buildFeatures {
-    compose = true
-  }
-  composeOptions {
-    kotlinCompilerExtensionVersion = "1.5.3"
   }
 
   buildTypes {
@@ -40,31 +33,17 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.domain)
-  implementation(projects.core.designsystem)
+  implementation(projects.core.model)
 
-  implementation(libs.androidx.lifecycle.runtimeCompose)
-  implementation(libs.androidx.lifecycle.viewModelCompose)
-  implementation(libs.androidx.navigation.compose)
   implementation(libs.core.ktx)
-  implementation(libs.lifecycle.runtime.ktx)
-  implementation(libs.ui)
-  implementation(libs.ui.graphics)
-  implementation(libs.ui.tooling.preview)
-  implementation(libs.material3)
+  implementation(libs.appcompat)
+  implementation(libs.material)
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.ext.junit)
   androidTestImplementation(libs.espresso.core)
-  androidTestImplementation(platform(libs.compose.bom))
-  androidTestImplementation(libs.ui.test.junit4)
-  debugImplementation(libs.ui.tooling)
-  debugImplementation(libs.ui.test.manifest)
 
-
-  implementation(libs.androidx.hilt.navigation.compose)
   implementation(libs.hilt.android)
   ksp(libs.hilt.compiler)
 
-  implementation(libs.timber)
-  implementation(libs.androidx.core.splashscreen)
+  implementation(libs.androidx.dataStore)
 }

@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sadri.composemocktodo.ui.App
 import com.sadri.data.util.NetworkMonitor
 import com.sadri.designsystem.theme.ComposeMockTodoTheme
@@ -33,10 +35,13 @@ class MainActivity : ComponentActivity() {
       }
     }
     setContent {
+      val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+      val startDestination = (uiState as? SplashUiState.Destination)?.route ?: "splash"
       ComposeMockTodoTheme {
         App(
           windowSizeClass = calculateWindowSizeClass(this),
-          networkMonitor = networkMonitor
+          networkMonitor = networkMonitor,
+          startDestination = startDestination
         )
       }
     }
