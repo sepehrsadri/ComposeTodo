@@ -23,6 +23,7 @@ timber = "5.0.1"
 material3 = "1.1.2"
 material = "1.10.0"
 turbine = "1.0.0"
+androidxCoreSplashscreen = "1.0.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -60,6 +61,7 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

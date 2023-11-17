@@ -71,10 +71,12 @@ android {
 dependencies {
   implementation(projects.feature.login)
   implementation(projects.feature.todo)
+  implementation(projects.feature.splash)
   implementation(projects.core.designsystem)
   implementation(projects.core.data)
   implementation(projects.core.logger)
 
+  implementation(libs.androidx.core.splashscreen)
   implementation(libs.material3)
   implementation(libs.androidx.compose.material3.windowSizeClass)
   implementation(libs.androidx.window.manager)
