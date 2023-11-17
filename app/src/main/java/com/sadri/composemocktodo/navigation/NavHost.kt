@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.sadri.composemocktodo.ui.AppState
-import com.sadri.login.navigation.loginRoute
 import com.sadri.login.navigation.loginScreen
+import com.sadri.splash.navigation.splashScreen
 import com.sadri.todo.navigation.navigateToTodoScreen
 import com.sadri.todo.navigation.todoScreen
 
@@ -27,5 +27,6 @@ fun NavHost(
       onShowSnackbar = onShowSnackbar
     )
     todoScreen()
+    splashScreen()
   }
 }

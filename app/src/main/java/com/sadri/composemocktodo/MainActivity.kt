@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
     }
     setContent {
       val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-      val startDestination = (uiState as? SplashUiState.Destination)?.route ?: "login"
+      val startDestination = (uiState as? SplashUiState.Destination)?.route ?: "splash"
       ComposeMockTodoTheme {
         App(
           windowSizeClass = calculateWindowSizeClass(this),
