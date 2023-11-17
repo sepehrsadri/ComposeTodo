@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-  namespace = "com.sadri.splash"
+  namespace = "com.sadri.profile"
   compileSdk = 34
 
   defaultConfig {
@@ -40,9 +40,11 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.domain)
   implementation(projects.core.designsystem)
+  implementation(projects.core.domain)
   implementation(projects.core.model)
+  implementation(projects.core.common)
+  implementation(projects.core.data)
 
   implementation(libs.androidx.lifecycle.runtimeCompose)
   implementation(libs.androidx.lifecycle.viewModelCompose)
@@ -60,6 +62,7 @@ dependencies {
   androidTestImplementation(libs.ui.test.junit4)
   debugImplementation(libs.ui.tooling)
   debugImplementation(libs.ui.test.manifest)
+  testImplementation(projects.core.testing)
 
 
   implementation(libs.androidx.hilt.navigation.compose)
@@ -67,5 +70,4 @@ dependencies {
   ksp(libs.hilt.compiler)
 
   implementation(libs.timber)
-  implementation(libs.androidx.core.splashscreen)
 }

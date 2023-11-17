@@ -1,9 +1,10 @@
 package com.sadri.data.repository
 
+import com.sadri.model.LocalUserEntity
 import kotlinx.coroutines.flow.Flow
 
 
 interface AppConfigRepository {
-  fun getUserId(): Flow<Result<String>>
-  suspend fun saveUserId(userId: String?)
+  fun getLocalUser(): Flow<LocalUserEntity>
+  suspend fun saveUser(localUserEntity: LocalUserEntity)
 }

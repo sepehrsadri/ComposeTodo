@@ -3,7 +3,8 @@ package com.sadri.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sadri.domain.LoginUseCase
-import com.sadri.domain.SaveUserIdUseCase
+import com.sadri.domain.SaveLocalUserUseCase
+import com.sadri.model.LocalUserEntity
 import com.sadri.model.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
   private val loginUseCase: LoginUseCase,
-  private val saveUserIdUseCase: SaveUserIdUseCase
+  private val saveLocalUserUseCase: SaveLocalUserUseCase
 ) : ViewModel() {
   private val _uiState: MutableStateFlow<LoginUiState> = MutableStateFlow(LoginUiState.Nothing)
   val uiState: StateFlow<LoginUiState> = _uiState
@@ -25,7 +26,12 @@ class LoginViewModel @Inject constructor(
       loginUseCase.invoke(username).collect { result ->
         result
           .onSuccess {
-            saveUserIdUseCase.invoke(it.id.toString())
+            saveLocalUserUseCase.invoke(
+              LocalUserEntity(
+                id = it.id.toString(),
+                username = it.username
+              )
+            )
             _uiState.value = LoginUiState.Success(it)
           }
           .onFailure {

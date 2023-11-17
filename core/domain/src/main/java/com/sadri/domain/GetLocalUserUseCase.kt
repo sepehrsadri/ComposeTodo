@@ -1,12 +1,13 @@
 package com.sadri.domain
 
 import com.sadri.data.repository.AppConfigRepository
+import com.sadri.model.LocalUserEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetUserIdUseCase @Inject constructor(
+class GetLocalUserUseCase @Inject constructor(
   private val appConfigRepository: AppConfigRepository
 ) {
-  operator fun invoke(): Flow<Result<String>> =
-    appConfigRepository.getUserId()
+  operator fun invoke(): Flow<LocalUserEntity> =
+    appConfigRepository.getLocalUser()
 }
