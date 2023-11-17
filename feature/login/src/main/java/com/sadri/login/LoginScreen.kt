@@ -31,6 +31,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sadri.designsystem.component.Loading
 import com.sadri.designsystem.component.SimpleTextField
 import com.sadri.designsystem.theme.space
 
@@ -137,14 +138,4 @@ internal fun LoginScreen(
       }
     }
   }
-}
-
-@Composable
-private fun BoxScope.Loading() {
-  CircularProgressIndicator(
-    modifier = Modifier
-      .size(MaterialTheme.space.xLarge)
-      .align(Alignment.Center),
-    color = MaterialTheme.colorScheme.primary
-  )
 }
